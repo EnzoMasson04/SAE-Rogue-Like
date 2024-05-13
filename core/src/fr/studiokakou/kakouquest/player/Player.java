@@ -29,6 +29,12 @@ import java.util.ArrayList;
 public class Player {
 
     /**
+     * l'xp du joueur et le level du joueur
+     */
+    public int xp;
+    public int level;
+
+    /**
      * la position du joueur.
      */
 //player pos
@@ -181,19 +187,19 @@ public class Player {
     /**
      *
      */
-    boolean flip=false;       //false = regard à droite
+    boolean flip = false;       //false = regard à droite
     /**
      * si le joueur est en train de courir.
      */
-    boolean isRunning=false;
+    boolean isRunning = false;
     /**
      * si le joueur est en train de spawn.
      */
-    public boolean isPlayerSpawning=false;
+    public boolean isPlayerSpawning = false;
     /**
      * si le joueur a spawn.
      */
-    public boolean hasPlayerSpawn=false;
+    public boolean hasPlayerSpawn = false;
 
     /**
      * la texture de l'animation de spawn.
@@ -264,12 +270,14 @@ public class Player {
         this.lastPos = this.pos;
 
         //default values
-        this.max_hp=100;
-        this.hp=100;
-        this.strength=10;
-        this.speed=40f;
-        this.max_stamina=100;
+        this.max_hp = 100;
+        this.hp = 100;
+        this.strength = 10;
+        this.speed = 40f;
+        this.max_stamina = 100;
         this.stamina = 100;
+        this.level = 1;
+        this.xp = 0;
 
         //default weapon
         this.defaultWeapon = MeleeWeapon.RUSTY_SWORD();
@@ -377,7 +385,7 @@ public class Player {
      */
     public void dash(Map map){    //used for the dash animation
         if (this.isDashing){
-            if (this.dashFinalPoint == null && this.dashOrientation==null){
+            if (this.dashFinalPoint == null && this.dashOrientation == null){
                 Point mousePos = Utils.mousePosUnproject(Camera.camera);
                 this.dashFinalPoint = Utils.getPointDirection(this.pos, mousePos, Player.DASH_DISTANCE);
                 this.dashStartPoint = this.pos;
@@ -468,6 +476,29 @@ public class Player {
                 }
             }
         }
+    }
+
+    /**
+     * Gain d'xp pour le joueur
+     */
+    public void getXp(String type) {
+        if (type == "monster") {
+            this.xp += 20 / this.level;
+        } else if (type == "level") {
+            this.xp += 100 / this.level;
+        }
+        while (this.xp >= 100) {
+            this.xp -= 100;
+            this.level += 1;
+            this.nextLevel();
+        }
+    }
+
+    /**
+     * Changement de level et augmentation de stats
+     */
+    public void nextLevel() {
+
     }
 
     /**

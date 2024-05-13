@@ -121,6 +121,8 @@ public class InGameScreen implements Screen {
 		this.player.hasPlayerSpawn=false;
 		this.player.setPos(map.getPlayerSpawn());
 
+		this.player.getXp("level");
+
 		startTime = TimeUtils.millis();
 
 		this.map.spawnMonsters(currentLevel);

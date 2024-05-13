@@ -219,9 +219,10 @@ public class Monster {
      * @param player The player attacking the monster.
      */
     public void takeDamage(Player player){
-        this.hp -= player.currentWeapon.damage*(player.strength/10);
+        this.hp -= player.currentWeapon.damage * (player.strength/10);
         if (this.hp <= 0){
-            this.isDying=true;
+            this.isDying = true;
+            player.getXp("monster");
         }
     }
 
