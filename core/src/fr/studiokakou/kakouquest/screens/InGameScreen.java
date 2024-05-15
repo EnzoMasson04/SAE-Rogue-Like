@@ -43,6 +43,11 @@ public class InGameScreen implements Screen {
 	SpriteBatch hudBatch;
 
 	/**
+	 * Batch pour l'augmentation du niveau du joueur.
+	 */
+	SpriteBatch playerLevelBatch;
+
+	/**
 	 * Temps écoulé depuis le début du jeu.
 	 */
 	public static float stateTime=0f;
@@ -203,11 +208,15 @@ public class InGameScreen implements Screen {
 		this.hud.draw(hudBatch);
 		hudBatch.end();
 
-		if (player.hp<=0){
-			this.currentLevel=0;
+		if (player.hp <= 0){
+			this.currentLevel = 0;
 			this.player.playerDeath();
 			this.nextLevel();
 		}
+
+		playerLevelBatch.begin();
+		this.hud.draw(playerLevelBatch);
+		playerLevelBatch.end();
 
 		this.map.updateRemoveInteractive();
 	}

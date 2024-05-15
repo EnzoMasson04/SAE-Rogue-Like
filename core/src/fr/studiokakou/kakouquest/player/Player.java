@@ -487,18 +487,6 @@ public class Player {
         } else if (type == "level") {
             this.xp += 100 / this.level;
         }
-        while (this.xp >= 100) {
-            this.xp -= 100;
-            this.level += 1;
-            this.nextLevel();
-        }
-    }
-
-    /**
-     * Changement de level et augmentation de stats
-     */
-    public void nextLevel() {
-
     }
 
     /**

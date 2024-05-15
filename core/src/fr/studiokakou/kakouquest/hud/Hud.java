@@ -10,7 +10,7 @@ import fr.studiokakou.kakouquest.item.Potion;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Pixmap;
-
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +54,11 @@ public class Hud {
     BitmapFont font;
 
     /**
+     * Liste des améliorations
+     */
+    private ArrayList<ClickableCard> levelUpCards = new ArrayList<>();
+
+    /**
      * The SnapeRenderer
      */
     private ShapeRenderer shapeRenderer;
@@ -72,6 +77,13 @@ public class Hud {
 
         shapeRenderer = new ShapeRenderer();
         this.hudSize = hudSizeMult;
+
+        // Ajouter des cartes pour le niveau supérieur
+        Texture cardTexture = new Texture("jsp");
+        String cardText = "Pour Améliorer";
+        Rectangle cardBounds = new Rectangle(100, 100, hudSize / 5, hudSize / 5);
+        ClickableCard card = new ClickableCard(cardTexture, cardText, cardBounds);
+        levelUpCards.add(card);
 
         //health bar textures
         this.healthBarOutside = new Texture("assets/hud/health/outside.png");
@@ -107,6 +119,7 @@ public class Hud {
 
         batch.draw(this.staminaBar.get(getStaminaAmount()), staminaBarPos.x, staminaBarPos.y, this.staminaBar.get(0).getWidth()*this.hudSize, this.staminaBar.get(0).getHeight()*this.hudSize);
 
+        // Affichage de l'inventaire
         Texture square = drawSquare(Color.WHITE);
         batch.draw(square, weaponIcon1Pos.x - 33, weaponIcon1Pos.y - 55);
         batch.draw(square, weaponIcon2Pos.x - 33, weaponIcon2Pos.y - 55);
@@ -114,6 +127,8 @@ public class Hud {
 
         Texture defaultWeaponIcon = this.player.defaultWeapon.texture;
         batch.draw(defaultWeaponIcon, defaultWeaponIconPos.x, defaultWeaponIconPos.y, defaultWeaponIcon.getWidth() * hudSize * 1f, defaultWeaponIcon.getHeight() * hudSize * 1f);
+
+        // Affichage des armes dans l'inventaire
         if (this.player.weapons.size() > 0) {
             if (this.player.indexWeapon == 0) {
                 Texture redSquare = drawSquare(Color.RED);
@@ -153,6 +168,23 @@ public class Hud {
 
                 String potionCountText = "x" + potionCount;
                 font.draw(batch, potionCountText, potionIconPos.x + 35, potionIconPos.y + 15);
+            }
+        }
+
+        if (player.xp >= 100) {
+            player.xp -= 100;
+            player.level += 1;
+
+            for (ClickableCard card : levelUpCards) {
+                card.draw(batch);
+            }
+        }
+    }
+
+    public void handleClick(float x, float y) {
+        for (ClickableCard card : levelUpCards) {
+            if (card.isClicked(x, y)) {
+                // Gérez le clic sur la carte ici
             }
         }
     }
