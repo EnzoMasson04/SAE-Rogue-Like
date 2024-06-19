@@ -77,6 +77,7 @@ public class Player {
      */
 //potion
     public HashMap<Potion.PotionType, Integer> potions = new HashMap<>();
+    public Potion.PotionType indexPotion = null;
     /**
      * si le joueur est en train de dash.
      */
@@ -590,14 +591,43 @@ public class Player {
      * Permet de récupérer le choix de l'utilisation des potions.
      */
     public void getKeyboardPotion() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            usePotion(Potion.PotionType.HEALTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            usePotion(Potion.PotionType.STAMINA);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
-            usePotion(Potion.PotionType.STRENGTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.APOSTROPHE)) {
-            usePotion(Potion.PotionType.SPEED);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            if (indexPotion == null) {
+                // Sélectionne la première potion non nulle
+                for (Potion.PotionType type : potions.keySet()) {
+                    if (potions.get(type) > 0) {
+                        indexPotion = type;
+                        break;
+                    }
+                }
+            } else {
+                // Passe à la potion suivante
+                boolean foundCurrent = false;
+                for (Potion.PotionType type : potions.keySet()) {
+                    if (foundCurrent && potions.get(type) > 0) {
+                        indexPotion = type;
+                        break;
+                    }
+                    if (type == indexPotion) {
+                        foundCurrent = true;
+                    }
+                }
+                // Si aucune potion suivante trouvée, revient au début
+                if (!foundCurrent || potions.get(indexPotion) == 0) {
+                    indexPotion = null;
+                    for (Potion.PotionType type : potions.keySet()) {
+                        if (potions.get(type) > 0) {
+                            indexPotion = type;
+                            break;
+                        }
+                    }
+                }
+            }
+            System.out.println(indexPotion);
+            System.out.println(potions);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            usePotion(indexPotion);
         }
     }
 
