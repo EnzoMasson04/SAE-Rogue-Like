@@ -10,10 +10,9 @@ import fr.studiokakou.kakouquest.item.Potion;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.math.Rectangle;
 import fr.studiokakou.kakouquest.screens.InGameScreen;
 import fr.studiokakou.kakouquest.utils.Utils;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -50,7 +49,12 @@ public class Hud {
 
         this.hudSize = hudSizeMult;
 
-        this.arrowTexture = new Texture("assets/weapon/weapon_arrow.png");
+        // Ajouter des cartes pour le niveau supérieur
+        Texture cardTexture = new Texture("jsp");
+        String cardText = "Pour Améliorer";
+        Rectangle cardBounds = new Rectangle(100, 100, hudSize / 5, hudSize / 5);
+        ClickableCard card = new ClickableCard(cardTexture, cardText, cardBounds);
+        levelUpCards.add(card);
 
         //health bar textures
         this.healthBarOutside = new Texture("assets/hud/health/outside.png");
@@ -230,7 +234,6 @@ public class Hud {
         }
         return staminaAmount;
     }
-
 
     private int getHealthAmount() {
         int healthAmount;

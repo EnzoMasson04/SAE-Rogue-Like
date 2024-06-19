@@ -300,11 +300,7 @@ public class Monster {
         return Utils.distance(this.pos, playerPos) <= this.detectRange;
     }
 
-    /**
-     * Attacks the player.
-     *
-     * @param player The player to attack.
-     */
+
     private void attack(Player player) {
         if (this.isDying || !player.hasPlayerSpawn){
             return;
@@ -321,10 +317,10 @@ public class Monster {
      * @param player The player attacking the monster.
      */
     public void takeDamage(Player player){
-        this.hp -= player.currentWeapon.damage*(player.strength/10);
+        this.hp -= player.currentWeapon.damage * (player.strength/10);
         if (this.hp <= 0){
-            this.isDying=true;
-            player.gainExperience(this.xp);
+            this.isDying = true;
+            player.getXp("monster");
         }
     }
 
@@ -455,7 +451,6 @@ public class Monster {
         possibleMonsters.put(10, new ArrayList<>());
         possibleMonsters.put(11, new ArrayList<>());
         possibleMonsters.put(12, new ArrayList<>());
-        possibleMonsters.put(13, new ArrayList<>());
 
 
         possibleMonsters.get(10).add(BIG_DEMON(currentLevel));
@@ -471,13 +466,6 @@ public class Monster {
         possibleMonsters.get(7).add(SWAMPY(currentLevel));
         possibleMonsters.get(1).add(TINY_ZOMBIE(currentLevel));
         possibleMonsters.get(4).add(WOGOL(currentLevel));
-        possibleMonsters.get(13).add(Boss.createSlimeBoss(currentLevel));
-    }
-
-    public void dispose(){
-        this.idleAnimation = null;
-        this.runAnimation = null;
-        this.bloodEffect = null;
     }
 
     static Monster BIG_DEMON(int currentLevel){

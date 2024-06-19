@@ -267,16 +267,15 @@ public class InGameScreen implements Screen {
 		}
 
 
-		if (player.hp<=0 && ! UpgradeCardScreen.isUpgrading){
-			currentLevel=0;
+		if (player.hp <= 0){
+			this.currentLevel = 0;
 			this.player.playerDeath();
 			this.nextLevel();
 		}
 
-		if (UpgradeCardScreen.isUpgrading){
-			upgradeBatch.begin();
-			upgradeBatch.end();
-		}
+		playerLevelBatch.begin();
+		this.hud.draw(playerLevelBatch);
+		playerLevelBatch.end();
 
 		this.map.updateRemoveInteractive();
 	}

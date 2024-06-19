@@ -165,19 +165,19 @@ public class Player {
     /**
      *
      */
-    boolean flip=false;       //false = regard à droite
+    boolean flip = false;       //false = regard à droite
     /**
      * si le joueur est en train de courir.
      */
-    boolean isRunning=false;
+    boolean isRunning = false;
     /**
      * si le joueur est en train de spawn.
      */
-    public boolean isPlayerSpawning=false;
+    public boolean isPlayerSpawning = false;
     /**
      * si le joueur a spawn.
      */
-    public boolean hasPlayerSpawn=false;
+    public boolean hasPlayerSpawn = false;
 
     /**
      * la texture de l'animation de spawn.
@@ -263,11 +263,11 @@ public class Player {
         this.lastPos = this.pos;
 
         //default values
-        this.max_hp=100;
-        this.hp=100;
-        this.strength=10;
-        this.speed=40f;
-        this.max_stamina=100;
+        this.max_hp = 100;
+        this.hp = 100;
+        this.strength = 10;
+        this.speed = 40f;
+        this.max_stamina = 100;
         this.stamina = 100;
         this.playerLevel = 1;
         this.experience = 0;
