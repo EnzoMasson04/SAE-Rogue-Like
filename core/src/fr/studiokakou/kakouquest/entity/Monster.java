@@ -320,7 +320,7 @@ public class Monster {
         this.hp -= player.currentWeapon.damage * (player.strength/10);
         if (this.hp <= 0){
             this.isDying = true;
-            player.getXp("monster");
+            player.gainExperience(this.xp);
         }
     }
 
